@@ -6,6 +6,8 @@ using Jellyfin.Plugin.MediathekViewDL.Configuration;
 using Jellyfin.Plugin.MediathekViewDL.Data;
 using Jellyfin.Plugin.MediathekViewDL.Providers;
 using Jellyfin.Plugin.MediathekViewDL.Services;
+using Jellyfin.Plugin.MediathekViewDL.Tasks;
+using MediaBrowser.Model.Tasks;
 using Jellyfin.Plugin.MediathekViewDL.Services.Downloading;
 using Jellyfin.Plugin.MediathekViewDL.Services.Downloading.Clients;
 using Jellyfin.Plugin.MediathekViewDL.Services.Downloading.Handlers;
@@ -87,6 +89,8 @@ namespace Jellyfin.Plugin.MediathekViewDL
             serviceCollection.AddSingleton<IDownloadQueueManager, DownloadQueueManager>();
             serviceCollection.AddSingleton<IUrlValidationService, UrlValidationService>();
             serviceCollection.AddTransient<INfoService, NfoService>();
+            serviceCollection.AddTransient<IMissingEpisodeService, MissingEpisodeService>();
+            serviceCollection.AddSingleton<IScheduledTask, MissingEpisodesSyncTask>();
 
             // External URL and ID Providers
             serviceCollection.AddSingleton<IExternalUrlProvider, MediathekExternalUrlProvider>();
