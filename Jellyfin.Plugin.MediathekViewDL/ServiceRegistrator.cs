@@ -4,6 +4,7 @@ using System.Net.Http;
 using Jellyfin.Plugin.MediathekViewDL.Channels;
 using Jellyfin.Plugin.MediathekViewDL.Configuration;
 using Jellyfin.Plugin.MediathekViewDL.Data;
+using Jellyfin.Plugin.MediathekViewDL.Providers;
 using Jellyfin.Plugin.MediathekViewDL.Services;
 using Jellyfin.Plugin.MediathekViewDL.Services.Downloading;
 using Jellyfin.Plugin.MediathekViewDL.Services.Downloading.Clients;
@@ -86,6 +87,12 @@ namespace Jellyfin.Plugin.MediathekViewDL
             serviceCollection.AddSingleton<IDownloadQueueManager, DownloadQueueManager>();
             serviceCollection.AddSingleton<IUrlValidationService, UrlValidationService>();
             serviceCollection.AddTransient<INfoService, NfoService>();
+
+            // External URL and ID Providers
+            serviceCollection.AddSingleton<IExternalUrlProvider, MediathekExternalUrlProvider>();
+            serviceCollection.AddSingleton<IExternalId, MediathekMovieExternalId>();
+            serviceCollection.AddSingleton<IExternalId, MediathekSeriesExternalId>();
+            serviceCollection.AddSingleton<IExternalId, MediathekEpisodeExternalId>();
         }
     }
 }
